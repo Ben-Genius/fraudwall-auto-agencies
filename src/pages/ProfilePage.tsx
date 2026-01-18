@@ -29,7 +29,7 @@ const ProfilePage: React.FC = () => {
                 <div className="flex flex-col flex-1 overflow-hidden">
                     <Header />
                     <PageContainer>
-                        <div className="flex flex-col gap-6 max-w-4xl mx-auto">
+                        <div className="flex flex-col gap-6 max-w-8xl mx-auto">
                             {/* Profile Header */}
                             <div className="bg-white border rounded-md p-8 flex flex-col md:flex-row items-center gap-8 shadow-sm">
                                 <div className={cn(

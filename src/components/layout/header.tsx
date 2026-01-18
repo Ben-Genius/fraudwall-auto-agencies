@@ -8,14 +8,16 @@ import {
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Bell, LogOut, Settings, User, Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
 import { UserRole, ROLE_COLORS } from '@/types/rbac.types';
+import { SearchModal } from '@/components/search/search-modal';
+import { useState } from 'react';
 
 
 export const Header = () => {
     const { user, logout } = useAuthStore();
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
     const roleColor = user?.role ? ROLE_COLORS[user.role] : ROLE_COLORS[UserRole.DVLA];
 
     return (
@@ -23,14 +25,18 @@ export const Header = () => {
             <div className="h-full px-8 flex items-center justify-between">
                 {/* Search Bar */}
                 <div className="flex-1 max-w-xl hidden md:block">
-                    <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <Input
-                            placeholder="Quick search (VIN, License, Case ID)..."
-                            className="w-full pl-10 h-10 bg-gray-50 border-gray-200 rounded-md text-sm focus-visible:ring-primary"
-                        />
+                    <div className="relative group cursor-pointer" onClick={() => setIsSearchOpen(true)}>
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-hover:text-slate-900 transition-colors" />
+                        <div className="w-full pl-10 h-10 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-400 flex items-center group-hover:bg-gray-100 transition-all">
+                            Quick search (VIN, License, Case ID)...
+                            <div className="ml-auto mr-3 flex items-center gap-1.5 px-1.5 py-0.5 bg-white border rounded text-[10px] font-black text-slate-400">
+                                <span className="text-[8px]">⌘</span>K
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <SearchModal open={isSearchOpen} setOpen={setIsSearchOpen} />
 
                 {/* Right side actions */}
                 <div className="flex items-center gap-4">

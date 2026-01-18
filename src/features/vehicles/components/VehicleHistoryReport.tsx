@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Calendar,
     MapPin,
@@ -11,7 +11,8 @@ import {
     Download,
     FileSpreadsheet,
     ArrowRight,
-    Info} from 'lucide-react';
+    Info
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { VehicleHistory } from '../types/vehicle.types';
@@ -25,6 +26,7 @@ interface VehicleHistoryReportProps {
 }
 
 export const VehicleHistoryReport: React.FC<VehicleHistoryReportProps> = ({ report }) => {
+    const [eventView, setEventView] = useState<'timeline' | 'list'>('timeline');
 
     const exportToPDF = () => {
         const doc = new jsPDF();
@@ -203,52 +205,116 @@ export const VehicleHistoryReport: React.FC<VehicleHistoryReportProps> = ({ repo
                         <p className="text-xs text-gray-500 font-medium mt-1 uppercase tracking-wider">Detailed lifecycle tracking from first registration</p>
                     </div>
                     <div className="flex items-center gap-2">
-                        <div className="flex bg-gray-100 p-1 rounded">
-                            <button className="px-3 py-1 text-[10px] font-bold uppercase bg-white shadow-sm rounded">Timeline</button>
-                            <button className="px-3 py-1 text-[10px] font-bold uppercase text-gray-500">List</button>
+                        <div className="flex bg-slate-100 p-1 rounded-lg">
+                            <button
+                                onClick={() => setEventView('timeline')}
+                                className={cn(
+                                    "px-4 py-1.5 text-[10px] font-black uppercase transition-all rounded-md",
+                                    eventView === 'timeline' ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                                )}
+                            >
+                                Timeline
+                            </button>
+                            <button
+                                onClick={() => setEventView('list')}
+                                className={cn(
+                                    "px-4 py-1.5 text-[10px] font-black uppercase transition-all rounded-md",
+                                    eventView === 'list' ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                                )}
+                            >
+                                List View
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div className="p-8">
                     {report.events && report.events.length > 0 ? (
-                        <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-200 before:to-transparent">
-                            {report.events.map((event) => (
-                                <div key={event._id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                                    {/* Dot */}
-                                    <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-200 group-hover:bg-blue-600 group-hover:text-white text-slate-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 transition-colors duration-300">
-                                        {(event.details?.[0] || '').includes('Title') ? <FileText className="w-4 h-4" /> : <Calendar className="w-4 h-4" />}
-                                    </div>
-                                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-md border bg-white shadow-sm group-hover:border-blue-200 transition-colors">
-                                        <div className="flex items-center justify-between mb-1">
-                                            <div className="font-bold text-slate-900">{(event.details || []).join(', ')}</div>
-                                            <time className="font-mono text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">{event.date}</time>
+                        eventView === 'timeline' ? (
+                            <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-200 before:to-transparent">
+                                {report.events.map((event) => (
+                                    <div key={event._id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                                        {/* Dot */}
+                                        <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-200 group-hover:bg-blue-600 group-hover:text-white text-slate-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 transition-colors duration-300">
+                                            {(event.details?.[0] || '').includes('Title') ? <FileText className="w-4 h-4" /> : <Calendar className="w-4 h-4" />}
                                         </div>
-                                        <div className="flex items-center gap-4 mt-2">
-                                            <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                                                <MapPin className="w-3 h-3" />
-                                                {event.location}
+                                        <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-md border bg-white shadow-sm group-hover:border-blue-200 transition-colors">
+                                            <div className="flex items-center justify-between mb-1">
+                                                <div className="font-bold text-slate-900">{(event.details || []).join(', ')}</div>
+                                                <time className="font-mono text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">{event.date}</time>
                                             </div>
-                                            {event.odometer && (
+                                            <div className="flex items-center gap-4 mt-2">
                                                 <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                                                    <History className="w-3 h-3" />
-                                                    {event.odometer} mi
+                                                    <MapPin className="w-3 h-3" />
+                                                    {event.location}
                                                 </div>
-                                            )}
-                                        </div>
-                                        <div className="mt-3 pt-3 border-t border-dashed flex items-center justify-between">
-                                            <div className="flex gap-1">
-                                                {(event.source || []).map(src => (
-                                                    <span key={src} className="text-[9px] font-bold uppercase text-slate-400 border px-1.5 rounded">{src}</span>
-                                                ))}
+                                                {event.odometer && (
+                                                    <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                                                        <History className="w-3 h-3" />
+                                                        {event.odometer} mi
+                                                    </div>
+                                                )}
                                             </div>
-                                            <button className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                                                Details <ArrowRight className="w-3 h-3" />
-                                            </button>
+                                            <div className="mt-3 pt-3 border-t border-dashed flex items-center justify-between">
+                                                <div className="flex gap-1">
+                                                    {(event.source || []).map(src => (
+                                                        <span key={src} className="text-[9px] font-bold uppercase text-slate-400 border px-1.5 rounded">{src}</span>
+                                                    ))}
+                                                </div>
+                                                <button className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
+                                                    Details <ArrowRight className="w-3 h-3" />
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="overflow-hidden border rounded-xl">
+                                <table className="w-full text-sm text-left">
+                                    <thead className="text-[11px] text-slate-400 uppercase bg-slate-50/50 border-b font-black tracking-widest">
+                                        <tr>
+                                            <th className="px-6 py-4">Date</th>
+                                            <th className="px-6 py-4">Event Description</th>
+                                            <th className="px-6 py-4">Location</th>
+                                            <th className="px-6 py-4">Odometer</th>
+                                            <th className="px-6 py-4">Verification Sources</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-100 italic font-medium">
+                                        {report.events.map((event) => (
+                                            <tr key={event._id} className="hover:bg-slate-50/50 transition-colors group">
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <span className="font-mono text-[10px] font-black text-blue-600 bg-blue-50 px-2 py-1 rounded">{event.date}</span>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <span className="text-slate-900 font-bold">{(event.details || []).join(', ')}</span>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div className="flex items-center gap-2 text-slate-500">
+                                                        <MapPin className="w-3 h-3" />
+                                                        {event.location}
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {event.odometer ? (
+                                                        <span className="text-slate-600 font-black">{event.odometer} mi</span>
+                                                    ) : (
+                                                        <span className="text-slate-300">N/A</span>
+                                                    )}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {(event.source || []).map(src => (
+                                                            <span key={src} className="text-[9px] font-black uppercase text-slate-400 border px-1.5 py-0.5 rounded bg-white">{src}</span>
+                                                        ))}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )
                     ) : (
                         <div className="flex flex-col items-center justify-center py-20 text-center">
                             <div className="w-20 h-20 rounded-full bg-slate-50 flex items-center justify-center mb-4 border-2 border-dashed">

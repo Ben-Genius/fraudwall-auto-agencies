@@ -80,10 +80,10 @@ export const Sidebar = () => {
             )}
         >
             {/* Brand Section */}
-            <div className="flex items-center gap-3 px-6 h-16 border-b ">
+            <div className="flex items-center gap-3 px-6 h-16 border-b relative">
                 <div className={cn(
-                    "flex items-center justify-center w-20 h-20 mx-auto rounded bg-white overflow-hidden  shrink-0",
-                    roleColor.border
+                    "flex items-center justify-center w-20 h-20 mx-auto rounded bg-white overflow-hidden shrink-0 transition-all duration-300",
+                    isCollapsed ? "scale-50 -translate-x-2" : "scale-100"
                 )}>
                     <img
                         src={roleColor.logo}
@@ -91,6 +91,13 @@ export const Sidebar = () => {
                         className="w-full h-full object-contain p-1"
                     />
                 </div>
+
+                <button
+                    onClick={() => setIsCollapsed(!isCollapsed)}
+                    className="absolute -right-4 -top-0 w-8 h-8 bg-white border rounded-full flex items-center justify-center shadow-sm text-gray-400 hover:text-gray-900 border-slate-200 z-50 group hover:border-slate-400 transition-all"
+                >
+                    <ChevronLeft className={cn('w-6 h-6 transition-transform duration-300', isCollapsed && 'rotate-180 w-4 h-4')} />
+                </button>
             </div>
 
             {/* Nav Section */}
@@ -122,7 +129,7 @@ export const Sidebar = () => {
 
             {/* Profile / Bottom Section */}
             <div className="border-t p-4">
-             
+
 
 
                 <button
@@ -134,13 +141,6 @@ export const Sidebar = () => {
                 >
                     <LogOut className="w-5 h-5 shrink-0" />
                     {!isCollapsed && <span>Sign out</span>}
-                </button>
-
-                <button
-                    onClick={() => setIsCollapsed(!isCollapsed)}
-                    className="mt-4 w-full flex items-center justify-center p-1 text-gray-400 hover:text-gray-600"
-                >
-                    <ChevronLeft className={cn('w-4 h-4 transition-transform duration-300', isCollapsed && 'rotate-180')} />
                 </button>
             </div>
         </aside>

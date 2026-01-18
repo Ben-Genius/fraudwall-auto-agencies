@@ -21,12 +21,12 @@ const DVLADashboardPage: React.FC = () => {
     const navigate = useNavigate();
     const roleColor = user?.role ? ROLE_COLORS[user.role] : ROLE_COLORS[UserRole.DVLA];
 
-    const [stats, setStats] = useState({
+    const [stats] = useState({
         internalSearches: '4',
         externalSearches: '2',
         alerts: '2'
     });
-    const [recentSearches, setRecentSearches] = useState([
+    const [recentSearches] = useState([
         { vin: '5FPYK1F50A...', make: 'Honda', year: '2010', time: '2 mins ago', status: 'Salvage', risk: 'High', type: 'external' },
         { vin: 'JN1-AZ456-B', make: 'Nissan', year: '2022', time: '15 mins ago', status: 'Clean', risk: 'Low', type: 'internal' },
         { vin: '4S3-BM789-C', make: 'Subaru', year: '2018', time: '1 hour ago', status: 'Verified', risk: 'Low', type: 'internal' },

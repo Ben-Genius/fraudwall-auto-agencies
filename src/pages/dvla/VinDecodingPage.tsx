@@ -6,7 +6,7 @@ import { AuthGuard } from '@/components/guards/auth-guard';
 import { UserRole, ROLE_COLORS } from '@/types/rbac.types';
 import { useAuthStore } from '@/stores/auth-store';
 import { cn } from '@/lib/utils';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import {
     Search,
@@ -36,9 +36,27 @@ const VinDecodingPage: React.FC = () => {
 
     useEffect(() => {
         if (location.state?.vin) {
-            handleDecode();
+            setVin(location.state.vin);
+            // We use a small timeout to ensure the state update has propagated if needed, 
+            // though handleDecode will use the latest 'vin' from the function scope or we can pass it.
+            // Actually, handleDecode uses the 'vin' state. Let's make it more robust.
+            const triggerDecode = async () => {
+                setIsDecoding(true);
+                try {
+                    const response = await vehicleService.getVehicleHistory(location.state.vin);
+                    if (response.data) {
+                        setHistoryReport(response.data);
+                        setView('report');
+                    }
+                } catch (e) {
+                    console.error(e);
+                } finally {
+                    setIsDecoding(false);
+                }
+            };
+            triggerDecode();
         }
-    }, []);
+    }, [location.state?.vin]);
 
 
     const handleDecode = async () => {
