@@ -4,7 +4,6 @@ import { Header } from '@/components/layout/header';
 import { Sidebar } from '@/components/layout/sidebar';
 import { AuthGuard } from '@/components/guards/auth-guard';
 import {
-    CreditCard,
     Download,
     TrendingUp,
     Smartphone,
@@ -13,12 +12,12 @@ import {
     Clock,
     MoreHorizontal,
     Search,
-    ChevronRight,
     ArrowUpRight,
     ArrowDownLeft,
     FileText
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
 const PaymentsPage: React.FC = () => {

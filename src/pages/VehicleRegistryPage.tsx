@@ -9,7 +9,6 @@ import {
     Grid2X2,
     List,
     ChevronRight,
-    Car,
     Shield,
     Hash,
     MapPin,

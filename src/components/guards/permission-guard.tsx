@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
-import { useAuthStore, Permission } from '@/stores/auth-store';
+import { useAuthStore } from '@/stores/auth-store';
+import { Permission } from '@/types/rbac.types';
 
 interface PermissionGuardProps {
     children: React.ReactNode;

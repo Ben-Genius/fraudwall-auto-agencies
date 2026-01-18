@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
-import { useAuthStore, UserRole } from '@/stores/auth-store';
+import { useAuthStore } from '@/stores/auth-store';
+import { UserRole } from '@/types/rbac.types';
 
 interface RoleGuardProps {
     children: React.ReactNode;

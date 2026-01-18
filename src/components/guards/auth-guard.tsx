@@ -12,7 +12,7 @@ interface AuthGuardProps {
  * Protects routes requiring authentication and authorization.
  */
 export const AuthGuard = ({ children, allowedRoles, requiredPermission }: AuthGuardProps) => {
-    const { isAuthenticated, user, hasRole, hasPermission } = useAuthStore();
+    const { isAuthenticated, hasRole, hasPermission } = useAuthStore();
     const location = useLocation();
 
     if (!isAuthenticated) {
