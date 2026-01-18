@@ -94,7 +94,7 @@ const VinDecodingPage: React.FC = () => {
                 <div className="flex flex-col flex-1 overflow-hidden">
                     <Header />
                     <PageContainer className="overflow-y-auto">
-                        <div className="max-w-6xl mx-auto py-8 px-4">
+                        <div className="max-8xl mx-auto py-8 px-4">
                             {view === 'search' ? (
                                 <div className="flex flex-col gap-12 pt-12">
                                     <div className="text-center space-y-4">

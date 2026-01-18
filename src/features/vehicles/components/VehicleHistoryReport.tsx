@@ -72,7 +72,7 @@ export const VehicleHistoryReport: React.FC<VehicleHistoryReportProps> = ({ repo
     return (
         <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             {/* Action Bar */}
-            <div className="flex items-center justify-between bg-white p-4 rounded-md border shadow-sm sticky top-[72px] z-10">
+            <div className="flex items-center justify-between bg-white p-4 rounded-md border shadow-sm sticky top-0 z-10">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center border border-blue-100">
                         <FileText className="w-5 h-5 text-blue-600" />

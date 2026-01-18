@@ -19,7 +19,7 @@ export const Header = () => {
     const roleColor = user?.role ? ROLE_COLORS[user.role] : ROLE_COLORS[UserRole.DVLA];
 
     return (
-        <header className="sticky top-0 z-20 w-full h-16 bg-white border-b">
+        <header className="sticky top-0 z-20 w-full h-[4.75rem] bg-white border-b ">
             <div className="h-full px-8 flex items-center justify-between">
                 {/* Search Bar */}
                 <div className="flex-1 max-w-xl hidden md:block">

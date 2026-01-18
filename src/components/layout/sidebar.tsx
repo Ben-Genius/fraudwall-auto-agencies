@@ -122,36 +122,13 @@ export const Sidebar = () => {
 
             {/* Profile / Bottom Section */}
             <div className="border-t p-4">
-                {!isCollapsed && (
-                    <div className={cn(
-                        "flex items-center gap-3 px-2 py-3 mb-4 rounded-md border",
-                        roleColor.bg,
-                        roleColor.border
-                    )}>
-                        <div className={cn(
-                            "w-8 h-8 rounded bg-white overflow-hidden flex items-center justify-center shrink-0 border",
-                            roleColor.border
-                        )}>
-                            <img
-                                src={roleColor.logo}
-                                alt="Agency"
-                                className="w-full h-full object-contain p-0.5"
-                            />
-                        </div>
-                        <div className="flex flex-col min-w-0">
-                            <span className="text-xs font-semibold text-gray-900 truncate">{user?.firstName} {user?.lastName}</span>
-                            <span className={cn("text-[10px] font-bold uppercase truncate", roleColor.secondary)}>
-                                {user?.role}
-                            </span>
-                        </div>
-                    </div>
-                )}
+             
 
 
                 <button
                     onClick={logout}
                     className={cn(
-                        'w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors',
+                        'w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-red-600 hover:bg-gray-50 hover:text-gray-900 transition-colors',
                         isCollapsed && 'justify-center'
                     )}
                 >
