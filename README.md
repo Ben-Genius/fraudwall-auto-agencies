@@ -77,7 +77,7 @@ src/
 Create `.env.development` and `.env.production` files:
 
 ```bash
-VITE_API_BASE_URL=https://frauwall-auto-dev.azurewebsites.net
+VITE_API_BASE_URL=
 VITE_APP_NAME=FraudWallAuto
 VITE_APP_VERSION=1.0.0
 VITE_ENABLE_DEVTOOLS=true
