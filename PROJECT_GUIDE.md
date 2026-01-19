@@ -54,8 +54,8 @@ A comprehensive digital platform to combat vehicle fraud in Ghana through VIN de
 
 ### 2.1 Base URL
 ```
-Development: https://frauwall-auto-dev.azurewebsites.net
-Production: https://fraudwall-auto.azurewebsites.net
+Development: https://frauwall-auto-dev
+Production: https://fraudwall-auto
 ```
 
 ### 2.2 Authentication
