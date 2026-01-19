@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import {
-    Calendar,
     MapPin,
     ShieldAlert,
     User,
@@ -105,7 +104,7 @@ const RiskAssessmentCard: React.FC<RiskAssessmentCardProps> = ({
                             </svg>
                             <div className="absolute inset-0 flex flex-col items-center justify-center">
                                 <span className="text-3xl sm:text-4xl font-black">{score}</span>
-                                <span className="text-xs text-gray-500 font-medium">out of 100</span>
+                                <span className="text-sm text-gray-600 font-bold uppercase tracking-tighter">Score</span>
                             </div>
                         </div>
 
@@ -115,7 +114,7 @@ const RiskAssessmentCard: React.FC<RiskAssessmentCardProps> = ({
                                     {risk.level}
                                 </h3>
                             </div>
-                            <p className="text-sm text-gray-600 mb-4 max-w-xs">
+                            <p className="text-base text-gray-700 mb-4 max-w-xs leading-relaxed font-medium">
                                 {risk.description}
                             </p>
 
@@ -183,13 +182,13 @@ const MetricCard: React.FC<MetricCardProps> = ({ label, value, icon: Icon, color
             role="region"
             aria-label={ariaLabel || `${label}: ${value}`}
         >
-            <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center mb-3", colorClasses[color])}>
-                <Icon className="w-5 h-5" aria-hidden="true" />
+            <div className={cn("w-11 h-11 rounded-xl flex items-center justify-center mb-4", colorClasses[color])}>
+                <Icon className="w-6 h-6" aria-hidden="true" />
             </div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+            <p className="text-xs font-black text-gray-600 uppercase tracking-widest mb-1">
                 {label}
             </p>
-            <p className="text-2xl font-black text-gray-900">
+            <p className="text-3xl font-black text-gray-950 tracking-tight">
                 {value}
             </p>
         </div>
@@ -366,85 +365,114 @@ const CriticalAlertsContent: React.FC<{ report: VehicleHistory }> = ({ report })
     );
 };
 
-// Timeline View Component
-const TimelineView: React.FC<{ events: any[] }> = ({ events }) => {
+// Historical Events Table Component
+const HistoricalEventsTable: React.FC<{ events: any[] }> = ({ events }) => {
     return (
-        <div className="relative space-y-6 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent md:before:mx-auto md:before:left-1/2 md:before:ml-0">
-            {events.map((event, index) => {
-                const isCritical = (event.details || []).some((d: string) =>
-                    d.toLowerCase().includes('accident') ||
-                    d.toLowerCase().includes('damage') ||
-                    d.toLowerCase().includes('salvage')
-                );
+        <div className="overflow-hidden bg-white border rounded-xl shadow-md">
+            <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse" aria-label="Vehicle history events">
+                    <thead>
+                        <tr className="bg-gray-100/50 border-b border-gray-200">
+                            <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.1em] text-gray-600 w-32">Date</th>
+                            <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.1em] text-gray-600">Event Description</th>
+                            <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.1em] text-gray-600 w-40">Odometer</th>
+                            <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.1em] text-gray-600 w-48 text-right">Source</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                        {events.map((event) => {
+                            const isCritical = (event.details || []).some((d: string) =>
+                                d.toLowerCase().includes('accident') ||
+                                d.toLowerCase().includes('damage') ||
+                                d.toLowerCase().includes('salvage') ||
+                                d.toLowerCase().includes('total loss')
+                            );
 
-                return (
-                    <div
-                        key={event._id}
-                        className={cn(
-                            "relative flex items-center",
-                            "md:justify-normal",
-                            index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse",
-                            "group"
-                        )}
-                    >
-                        {/* Timeline Dot */}
-                        <div className={cn(
-                            "flex items-center justify-center w-10 h-10 rounded-full border-2 shadow shrink-0 z-10",
-                            "md:absolute md:left-1/2 md:transform md:-translate-x-1/2",
-                            isCritical
-                                ? "bg-red-100 border-red-500 text-red-600"
-                                : "bg-blue-100 border-blue-500 text-blue-600",
-                            "group-hover:scale-110 transition-transform bg-white"
-                        )}>
-                            <Calendar className="w-4 h-4" aria-hidden="true" />
-                        </div>
+                            return (
+                                <tr
+                                    key={event._id}
+                                    className={cn(
+                                        "group hover:bg-slate-50 transition-colors",
+                                        isCritical && "bg-red-50/40 hover:bg-red-50/60"
+                                    )}
+                                >
+                                    {/* Date Column */}
+                                    <td className="px-6 py-6 align-top">
+                                        <div className="flex flex-col">
+                                            <span className="text-sm font-black text-blue-700 font-mono">
+                                                {event.date}
+                                            </span>
+                                        </div>
+                                    </td>
 
-                        {/* Event Card */}
-                        <div className={cn(
-                            "ml-16 md:ml-0 w-full md:w-[calc(50%-2rem)]",
-                            "p-4 rounded-lg border bg-white shadow-sm",
-                            "hover:shadow-md transition-shadow",
-                            isCritical ? "border-red-200" : "border-gray-200",
-                            "text-left"
-                        )}>
-                            <div className="flex items-start justify-between gap-3 mb-2">
-                                <h4 className="font-semibold text-gray-900 flex-1">
-                                    {(event.details || []).slice(0, 2).join(', ')}
-                                </h4>
-                                <time className="text-[10px] font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded whitespace-nowrap">
-                                    {event.date}
-                                </time>
-                            </div>
+                                    {/* Description Column */}
+                                    <td className="px-6 py-6">
+                                        <div className="space-y-2.5">
+                                            <div className="flex items-start gap-2.5">
+                                                {isCritical && (
+                                                    <ShieldAlert className="w-5 h-5 text-red-600 mt-0.5 shrink-0" aria-hidden="true" />
+                                                )}
+                                                <h4 className={cn(
+                                                    "text-base font-bold leading-snug",
+                                                    isCritical ? "text-red-950" : "text-gray-900"
+                                                )}>
+                                                    {(event.details || []).join(', ')}
+                                                </h4>
+                                            </div>
 
-                            <div className="space-y-2 text-xs text-gray-600 font-medium">
-                                <div className="flex items-center gap-2">
-                                    <MapPin className="w-3.5 h-3.5 text-gray-400" aria-hidden="true" />
-                                    <span>{event.location}</span>
-                                </div>
-                                {event.odometer && (
-                                    <div className="flex items-center gap-2">
-                                        <History className="w-3.5 h-3.5 text-gray-400" aria-hidden="true" />
-                                        <span>{event.odometer} miles</span>
-                                    </div>
-                                )}
-                            </div>
+                                            <div className="flex items-center gap-4 text-sm text-gray-600 font-semibold">
+                                                <div className="flex items-center gap-2">
+                                                    <MapPin className="w-4 h-4 text-gray-500" />
+                                                    {event.location}
+                                                </div>
+                                                {isCritical && (
+                                                    <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-red-100 text-[10px] font-black uppercase text-red-700 border border-red-200 shadow-sm">
+                                                        High Priority Alert
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </td>
 
-                            {event.source && event.source.length > 0 && (
-                                <div className="mt-3 pt-3 border-t flex flex-wrap gap-1">
-                                    {event.source.map((src: string) => (
-                                        <span
-                                            key={src}
-                                            className="text-[9px] font-bold uppercase px-1.5 py-0.5 bg-gray-50 text-gray-400 border rounded"
-                                        >
-                                            {src}
-                                        </span>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                );
-            })}
+                                    {/* Odometer Column */}
+                                    <td className="px-6 py-6 align-top">
+                                        {event.odometer ? (
+                                            <div className="flex flex-col">
+                                                <span className="text-sm font-black text-gray-950 font-mono">
+                                                    {event.odometer.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                                </span>
+                                                <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest mt-0.5">Miles</span>
+                                            </div>
+                                        ) : (
+                                            <span className="text-sm text-gray-400 font-mono italic">Not Reported</span>
+                                        )}
+                                    </td>
+
+                                    {/* Source Column */}
+                                    <td className="px-6 py-6 align-top text-right">
+                                        <div className="flex flex-wrap justify-end gap-1.5">
+                                            {(event.source || []).map((src: string) => (
+                                                <span
+                                                    key={src}
+                                                    className="inline-block text-[10px] font-black uppercase px-2.5 py-1 bg-white text-gray-600 border border-gray-200 rounded shadow-sm group-hover:border-blue-200 group-hover:text-blue-600 transition-colors"
+                                                >
+                                                    {src}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
+
+            <div className="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">
+                    Total: {events.length} lifecycle events from {new Set(events.flatMap(e => e.source)).size} verified data sources
+                </p>
+            </div>
         </div>
     );
 };
@@ -469,18 +497,18 @@ const OwnershipContent: React.FC<{ owners: any[] }> = ({ owners }) => {
                     className="p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
                 >
                     <div className="flex items-center justify-between mb-1">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center border border-purple-100">
-                                <User className="w-5 h-5 text-purple-600" />
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center border-2 border-purple-100">
+                                <User className="w-6 h-6 text-purple-700" />
                             </div>
                             <div>
-                                <h4 className="font-bold text-gray-900">{owner.type}</h4>
-                                <p className="text-xs text-gray-500 font-medium tracking-tight">
+                                <h4 className="text-base font-bold text-gray-950">{owner.type}</h4>
+                                <p className="text-sm text-gray-600 font-semibold tracking-tight">
                                     {owner.state} • Registered in {owner.purchasedYear}
                                 </p>
                             </div>
                         </div>
-                        <span className="text-xs font-black text-gray-400 uppercase tracking-widest bg-gray-100 px-2 py-1 rounded">
+                        <span className="text-xs font-black text-gray-500 uppercase tracking-widest bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200 shadow-sm font-mono truncate">
                             {owner.ownedDuration}
                         </span>
                     </div>
@@ -496,43 +524,43 @@ const DetailsContent: React.FC<{ titleBrands: any, usage: any }> = ({ titleBrand
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Title Brands */}
             <div>
-                <h4 className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-                    <ShieldAlert className="w-3.5 h-3.5" />
+                <h4 className="text-xs font-black text-gray-600 uppercase tracking-[0.2em] mb-5 flex items-center gap-3">
+                    <ShieldAlert className="w-4 h-4 text-blue-600" />
                     Title History Check
                 </h4>
                 <div className="space-y-2">
                     {titleBrands ? Object.entries(titleBrands).map(([key, val]) => (
-                        <div key={key} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
-                            <span className="text-xs font-semibold text-gray-700">{key}</span>
+                        <div key={key} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                            <span className="text-sm font-bold text-gray-800">{key}</span>
                             <span className={cn(
-                                "text-[10px] font-black uppercase px-2 py-1 rounded",
+                                "text-[11px] font-black uppercase px-2.5 py-1.5 rounded-lg border shadow-sm",
                                 val === 'records found' ? "bg-red-50 text-red-600 border border-red-100" : "bg-emerald-50 text-emerald-600 border border-emerald-100"
                             )}>
-                                {val === 'records found' ? 'Alert' : 'Clean'}
+                                {val === 'records found' ? 'Alert Found' : 'Clean Record'}
                             </span>
                         </div>
-                    )) : <p className="text-xs text-gray-400 italic">No title data available.</p>}
+                    )) : <p className="text-sm text-gray-500 italic">No title data available.</p>}
                 </div>
             </div>
 
             {/* Usage Profile */}
             <div>
-                <h4 className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-                    <History className="w-3.5 h-3.5" />
+                <h4 className="text-xs font-black text-gray-600 uppercase tracking-[0.2em] mb-5 flex items-center gap-3">
+                    <History className="w-4 h-4 text-blue-600" />
                     Usage Characteristics
                 </h4>
                 <div className="space-y-2">
                     {usage ? Object.entries(usage).map(([key, val]) => (
-                        <div key={key} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
-                            <span className="text-xs font-semibold text-gray-700">{key}</span>
+                        <div key={key} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                            <span className="text-sm font-bold text-gray-800">{key}</span>
                             <span className={cn(
-                                "text-[10px] font-black uppercase px-2 py-1 rounded",
-                                val === 'records found' ? "bg-blue-50 text-blue-600 border border-blue-100" : "bg-gray-50 text-gray-300 border border-gray-100"
+                                "text-[11px] font-black uppercase px-2.5 py-1.5 rounded-lg border shadow-sm",
+                                val === 'records found' ? "bg-blue-50 text-blue-700 border-blue-200" : "bg-gray-50 text-gray-400 border-gray-200"
                             )}>
-                                {val === 'records found' ? 'Confirmed' : 'None'}
+                                {val === 'records found' ? 'Confirmed' : 'No Records'}
                             </span>
                         </div>
-                    )) : <p className="text-xs text-gray-400 italic">No usage data found.</p>}
+                    )) : <p className="text-sm text-gray-500 italic">No usage data found.</p>}
                 </div>
             </div>
         </div>
@@ -902,7 +930,7 @@ export const VehicleHistoryReport: React.FC<VehicleHistoryReportProps> = ({
                     </div>
 
                     {filteredEvents.length > 0 ? (
-                        <TimelineView events={filteredEvents} />
+                        <HistoricalEventsTable events={filteredEvents} />
                     ) : (
                         <EmptyState icon={History} title="No Records Found" description="Adjust your filters or search keywords to view historical data." />
                     )}

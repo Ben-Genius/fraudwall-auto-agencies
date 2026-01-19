@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Loader2 } from 'lucide-react';
+import { Loader } from 'lucide-react';
 
 interface LoadingSpinnerProps {
     className?: string;
@@ -9,10 +9,10 @@ interface LoadingSpinnerProps {
 /**
  * A reusable loading spinner component using Lucide's Loader2.
  */
-export const LoadingSpinner = ({ className, size = 24 }: LoadingSpinnerProps) => {
+export const LoadingSpinner = ({ className, size = 28 }: LoadingSpinnerProps) => {
     return (
-        <div className="flex h-full w-full items-center justify-center p-4">
-            <Loader2
+        <div className="min-h-screen flex items-center justify-center p-4">
+            <Loader
                 className={cn('animate-spin text-primary', className)}
                 size={size}
             />
