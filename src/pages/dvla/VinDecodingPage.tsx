@@ -129,14 +129,14 @@ const VinDecodingPage: React.FC = () => {
                                     </div>
 
                                     <div className="max-w-3xl mx-auto w-full">
-                                        <div className="bg-white p-2 rounded-xl border shadow-2xl flex gap-3 focus-within:ring-2 focus-within:ring-blue-500 transition-all">
+                                        <div className="bg-white p-2 rounded-xl border-[1px] flex gap-3  transition-all">
                                             <div className="flex-1 relative">
                                                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                                                 <Input
                                                     placeholder="Scan or Enter 17-character VIN Number..."
                                                     value={vin}
                                                     onChange={(e) => setVin(e.target.value.toUpperCase())}
-                                                    className="w-full pl-12 h-14 border-none text-xl font-mono tracking-widest focus-visible:ring-0"
+                                                    className="w-full pl-12 h-14 border-none text-xl font-mono tracking-widest focus-visible:ring-0 outline-none"
                                                     maxLength={17}
                                                     onKeyDown={(e) => e.key === 'Enter' && handleDecode()}
                                                 />
@@ -144,7 +144,7 @@ const VinDecodingPage: React.FC = () => {
                                             <Button
                                                 onClick={handleDecode}
                                                 disabled={isDecoding || vin.length < 5}
-                                                className={cn("h-14 px-10 text-lg font-bold rounded-lg transition-all text-white", roleColor.primary, `hover:${roleColor.primary.replace('600', '700')}`)}
+                                                className="h-14 px-10 text-md font-bold rounded-lg transition-all text-white hover:bg-primary/90"
                                             >
                                                 {isDecoding ? <Loader2 className="animate-spin" /> : "Generate Report"}
                                             </Button>
@@ -191,8 +191,8 @@ const VinDecodingPage: React.FC = () => {
 
 const InfoFeature = ({ icon: Icon, title, desc }: any) => (
     <div className="bg-white p-6 rounded-md border shadow-sm border-b-4 border-b-slate-100 flex flex-col gap-3">
-        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-            <Icon className="w-5 h-5 text-blue-600" />
+        <div className="w-10 h-10 rounded-lg bg-primary-400 flex items-center justify-center">
+            <Icon className="w-5 h-5 text-white" />
         </div>
         <h3 className="font-bold text-slate-900">{title}</h3>
         <p className="text-xs text-slate-500 font-medium leading-relaxed">{desc}</p>

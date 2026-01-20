@@ -72,7 +72,7 @@ export const LoginForm: React.FC = () => {
                         id="email"
                         type="email"
                         placeholder="you@agency.gov.gh"
-                        className="pl-11 h-12 bg-gray-50 border-gray-200 focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 rounded-lg transition-all"
+                        className="pl-11 h-12 bg-gray-50 border-gray-200 focus:ring-2 focus:ring-primary-orange/20  rounded-lg transition-all"
                         {...form.register("email")}
                     />
                 </div>
@@ -84,7 +84,7 @@ export const LoginForm: React.FC = () => {
             <div className="space-y-2">
                 <div className="flex items-center justify-between">
                     <Label htmlFor="password" className="text-sm font-semibold text-gray-700">Password</Label>
-                    <a href="#" className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                    <a href="#" className="text-xs font-semibold text-primary-orange hover:text-primary-red transition-colors">
                         Forgot Password?
                     </a>
                 </div>
@@ -94,7 +94,7 @@ export const LoginForm: React.FC = () => {
                         id="password"
                         type="password"
                         placeholder="••••••••"
-                        className="pl-11 h-12 bg-gray-50 border-gray-200 focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 rounded-lg transition-all"
+                        className="pl-11 h-12 bg-gray-50 border-gray-200 focus:ring-2 focus:ring-primary-orange/20  rounded-lg transition-all"
                         {...form.register("password")}
                     />
                 </div>
@@ -105,7 +105,7 @@ export const LoginForm: React.FC = () => {
 
             <Button
                 type="submit"
-                className="w-full h-12 bg-gray-900 text-white hover:bg-gray-800 font-bold rounded-lg transition-all active:scale-[0.99]"
+                className="w-full h-12 bg-primary-orange hover:bg-primary-red/90 text-white font-bold rounded-lg transition-all active:scale-[0.99] shadow-lg shadow-primary-orange/20"
                 disabled={isLoading}
             >
                 {isLoading ? (

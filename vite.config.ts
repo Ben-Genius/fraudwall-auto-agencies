@@ -22,9 +22,19 @@ export default defineConfig({
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'query-vendor': ['@tanstack/react-query'],
-          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-select'],
+          'ui-vendor': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-select',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-toast'
+          ],
+          'reporting-vendor': ['jspdf', 'jspdf-autotable', 'xlsx', 'file-saver'],
+          'icons-vendor': ['lucide-react'],
+          'charts-vendor': ['recharts'],
         },
       },
     },
+    chunkSizeWarningLimit: 1000,
   },
 });

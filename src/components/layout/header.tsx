@@ -7,14 +7,13 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Bell, LogOut, Settings, User, Search, UsersIcon, User2 } from 'lucide-react';
+import { LogOut, Settings, User, Search, User2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 import { UserRole, ROLE_COLORS } from '@/types/rbac.types';
 import { SearchModal } from '@/components/search/search-modal';
 import { useState } from 'react';
 import { NotificationDropdown } from '@/components/notifications/notification-dropdown';
-import { Avatar } from '@radix-ui/react-avatar';
 
 
 export const Header = () => {
@@ -28,8 +27,8 @@ export const Header = () => {
                 {/* Search Bar */}
                 <div className="flex-1 max-w-xl hidden md:block">
                     <div className="relative group cursor-pointer" onClick={() => setIsSearchOpen(true)}>
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-hover:text-slate-900 transition-colors" />
-                        <div className="w-full pl-10 h-10 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-400 flex items-center group-hover:bg-gray-100 transition-all">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-hover:text-primary-red transition-colors" />
+                        <div className="w-full pl-10 h-10 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-400 flex items-center group-hover:bg-primary-red/5 group-hover:border-primary-red/20 transition-all">
                             Quick search (VIN, License, Case ID)...
                             <div className="ml-auto mr-3 flex items-center gap-1.5 px-1.5 py-0.5 bg-white border rounded text-[10px] font-black text-slate-400">
                                 <span className="text-[8px]">⌘</span>K
@@ -48,15 +47,16 @@ export const Header = () => {
 
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <button className="flex items-center gap-2 p-1 rounded-md hover:bg-gray-50 transition-colors">
+                            <button className="group flex items-center gap-2 p-1 rounded-md hover:bg-primary-red/5 transition-colors">
                                 <div className={cn(
-                                    "w-8 h-8 rounded bg-white overflow-hidden flex items-center justify-center border shrink-0",
+                                    "w-8 h-8 rounded bg-white overflow-hidden flex items-center justify-center border shrink-0 transition-colors",
+                                    "group-hover:border-primary-red/20",
                                     roleColor.border
                                 )}>
-                                   <User2 className="w-4 h-4 text-gray-400" />
+                                    <User2 className="w-4 h-4 text-gray-400 group-hover:text-primary-red transition-colors" />
                                 </div>
                                 <div className="hidden sm:flex flex-col items-start leading-tight">
-                                    <span className="text-sm font-medium text-gray-900">{user?.firstName}</span>
+                                    <span className="text-sm font-medium text-gray-900 group-hover:text-primary-red transition-colors">{user?.firstName}</span>
                                     <span className={cn("text-[10px] font-bold uppercase", roleColor.secondary)}>
                                         {user?.role}
                                     </span>

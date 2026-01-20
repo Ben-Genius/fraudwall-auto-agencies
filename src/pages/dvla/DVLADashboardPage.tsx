@@ -100,8 +100,9 @@ const DVLADashboardPage: React.FC = () => {
                                                 <tr>
                                                     <th className="pl-8 py-4 font-black "> VIN </th>
                                                     <th className="px-6 py-4 font-black">Vehicle Specification</th>
-                                                    <th className="px-6 py-4 font-black text-center">Protocol Origin</th>
                                                     <th className="px-6 py-4 font-black">Integrity Status</th>
+                                                    <th className="px-6 py-4 font-black text-center">Risk Grade</th>
+
                                                     <th className="px-6 py-4 font-black text-right">Verification</th>
                                                 </tr>
                                             </thead>
@@ -132,16 +133,7 @@ const DVLADashboardPage: React.FC = () => {
                                                                 <p className="text-[11px] text-slate-600  mt-1 uppercase">Series {search.year}</p>
                                                             </div>
                                                         </td>
-                                                        <td className="px-6 py-5 text-center">
-                                                            <span className={cn(
-                                                                "inline-flex items-center px-3 py-1 rounded text-[10px] font-black uppercase tracking-tighter border shadow-sm",
-                                                                search.type === 'internal'
-                                                                    ? "bg-white text-slate-600 border-slate-200"
-                                                                    : "bg-indigo-50 text-indigo-700 border-indigo-100"
-                                                            )}>
-                                                                {search.type === 'internal' ? 'Local DB' : 'Global API'}
-                                                            </span>
-                                                        </td>
+                                                    
                                                         <td className="px-6 py-5">
                                                             <div className="flex flex-col gap-1.5">
                                                                 <div className={cn(
@@ -159,17 +151,20 @@ const DVLADashboardPage: React.FC = () => {
                                                                     )}></div>
                                                                     {search.status}
                                                                 </div>
-                                                                <div className="flex items-center gap-1 ml-1">
-                                                                    <span className="text-[9px] text-slate-400 font-black uppercase tracking-wider opacity-60">Risk Grade:</span>
-                                                                    <span className={cn(
-                                                                        "text-[9px] font-black uppercase tracking-wider",
-                                                                        search.risk === 'Low' ? "text-emerald-600" : search.risk === 'Medium' ? "text-amber-600" : "text-red-600"
-                                                                    )}>
-                                                                        {search.risk}
-                                                                    </span>
-                                                                </div>
+                                                            
                                                             </div>
                                                         </td>
+                                                        <td className="px-6 py-5 text-center">
+                                                            <div className="flex items-center gap-1 ml-1">
+                                                                <span className={cn(
+                                                                    "text-xs font-black uppercase tracking-wider",
+                                                                    search.risk === 'Low' ? "text-emerald-600" : search.risk === 'Medium' ? "text-amber-600" : "text-red-600"
+                                                                )}>
+                                                                    {search.risk}
+                                                                </span>
+                                                            </div>
+                                                        </td>
+
                                                         <td className="px-6 py-5 text-right">
                                                             <button
                                                                 onClick={() => navigate('/vin-lookup', { state: { vin: search.vin } })}

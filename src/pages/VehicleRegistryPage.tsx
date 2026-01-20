@@ -51,7 +51,7 @@ const VehicleRegistryPage: React.FC = () => {
                                     </Button>
                                     <Button className="rounded-md h-10 bg-primary hover:bg-primary/90 text-white">
                                         <Plus className="w-4 h-4 mr-2" />
-                                        Register Vehicle
+                                        Import Data
                                     </Button>
                                 </div>
                             </div>

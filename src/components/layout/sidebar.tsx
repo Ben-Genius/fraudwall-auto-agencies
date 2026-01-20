@@ -9,10 +9,7 @@ import {
     Search,
     Car,
     ShieldAlert,
-    Ship,
     FileSearch,
-    BarChart3,
-    Users,
     ChevronLeft,
     LogOut,
     Settings
@@ -28,37 +25,32 @@ interface NavItem {
 
 const navItems: NavItem[] = [
     { label: 'Overview', href: '/dashboard', icon: LayoutDashboard },
-    { label: 'VIN Decoding', href: '/vin-lookup', icon: Search },
+    { label: 'VIN Lookup', href: '/vin-lookup', icon: Search },
     { label: 'Vehicle Registry', href: '/vehicle-history', icon: Car },
-    {
-        label: 'User Management',
-        href: '/admin/users',
-        icon: Users,
-        allowedRoles: [UserRole.DVLA]
-    },
+    // {
+    //     label: 'User Management',
+    //     href: '/admin/users',
+    //     icon: Users,
+    //     allowedRoles: [UserRole.DVLA]
+    // },
     {
         label: 'Alerts & Stolen',
         href: '/police/stolen',
         icon: ShieldAlert,
-        allowedRoles: [UserRole.POLICE, UserRole.DVLA, UserRole.EOCO]
+        allowedRoles: [UserRole.POLICE, UserRole.EOCO]
     },
-    {
-        label: 'Verifications',
-        href: '/customs/imports',
-        icon: Ship,
-        allowedRoles: [UserRole.CUSTOMS, UserRole.DVLA]
-    },
+
     {
         label: 'Active Cases',
         href: '/eoco/cases',
         icon: FileSearch,
         allowedRoles: [UserRole.EOCO]
     },
-    {
-        label: 'Analytics',
-        href: '/reports',
-        icon: BarChart3,
-    },
+    // {
+    //     label: 'Analytics',
+    //     href: '/reports',
+    //     icon: BarChart3,
+    // },
     { label: 'Account Settings', href: '/profile', icon: Settings },
 ];
 
@@ -114,7 +106,7 @@ export const Sidebar = () => {
                                 'flex items-center gap-3 mx-3 px-3 py-2.5 rounded-md transition-colors text-sm font-medium',
                                 isActive
                                     ? cn(roleColor.bg, roleColor.secondary)
-                                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                                    : 'text-gray-600 hover:bg-primary-red/10 hover:text-primary-red',
                                 isCollapsed && 'justify-center mx-1 px-0'
                             )}
                         >
@@ -137,7 +129,7 @@ export const Sidebar = () => {
                 <button
                     onClick={logout}
                     className={cn(
-                        'w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-red-600 hover:bg-gray-50 hover:text-gray-900 transition-colors',
+                        'w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-red-600 hover:bg-primary-red/10 hover:text-primary-red transition-colors',
                         isCollapsed && 'justify-center'
                     )}
                 >
@@ -145,7 +137,7 @@ export const Sidebar = () => {
                     {!isCollapsed && <span>Sign out</span>}
                 </button>
             </div>
-        </aside>
+        </aside >
     );
 };
 
