@@ -2,6 +2,8 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/stores/auth-store';
 import { UserRole, ROLE_COLORS } from '@/types/rbac.types';
 import { cn } from '@/lib/utils';
+import smallLogo from '@/assets/auto_symbol_logo.png'
+import largeLogo from '@/assets/auto_logo.png'
 import {
     LayoutDashboard,
     Search,
@@ -75,26 +77,26 @@ export const Sidebar = () => {
     return (
         <aside
             className={cn(
-                'relative flex flex-col h-screen bg-white border-r transition-all duration-300 z-30 pt-3',
+                'relative flex flex-col h-screen bg-white border-r transition-all duration-300 z-30',
                 isCollapsed ? 'w-20' : 'w-72'
             )}
         >
             {/* Brand Section */}
-            <div className="flex items-center gap-3 px-6 h-16 border-b relative">
+            <div className="flex items-center gap-3 px-6 h-[4.75rem] border-b relative">
                 <div className={cn(
-                    "flex items-center justify-center w-20 h-20 mx-auto rounded bg-white overflow-hidden shrink-0 transition-all duration-300",
-                    isCollapsed ? "scale-50 -translate-x-2" : "scale-100"
+                    "flex items-center justify-center mx-auto rounded bg-white  transition-all duration-300",
+                    isCollapsed ? "scale-150 " : "scale-100"
                 )}>
                     <img
-                        src={roleColor.logo}
+                        src={isCollapsed ? smallLogo : largeLogo}
                         alt="Agency Logo"
-                        className="w-full h-full object-contain p-1"
+                        className={`mx-auto object-contain ${isCollapsed ? 'w-[9rem]' : 'w-[12rem]'}`}
                     />
                 </div>
 
                 <button
                     onClick={() => setIsCollapsed(!isCollapsed)}
-                    className="absolute -right-4 -top-0 w-8 h-8 bg-white border rounded-full flex items-center justify-center shadow-sm text-gray-400 hover:text-gray-900 border-slate-200 z-50 group hover:border-slate-400 transition-all"
+                    className={`absolute -right-4 top-1/2 -translate-y-1/2 ${isCollapsed ? 'w-6 h-6' : 'w-8 h-8'} bg-white border rounded-full flex items-center justify-center shadow-sm text-gray-400 hover:text-gray-900 border-slate-200 z-50 group hover:border-slate-400 transition-all`}
                 >
                     <ChevronLeft className={cn('w-6 h-6 transition-transform duration-300', isCollapsed && 'rotate-180 w-4 h-4')} />
                 </button>

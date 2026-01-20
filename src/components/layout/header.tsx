@@ -7,12 +7,14 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Bell, LogOut, Settings, User, Search } from 'lucide-react';
+import { Bell, LogOut, Settings, User, Search, UsersIcon, User2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 import { UserRole, ROLE_COLORS } from '@/types/rbac.types';
 import { SearchModal } from '@/components/search/search-modal';
 import { useState } from 'react';
+import { NotificationDropdown } from '@/components/notifications/notification-dropdown';
+import { Avatar } from '@radix-ui/react-avatar';
 
 
 export const Header = () => {
@@ -40,9 +42,7 @@ export const Header = () => {
 
                 {/* Right side actions */}
                 <div className="flex items-center gap-4">
-                    <button className="p-2 text-gray-400 hover:text-gray-600 rounded-md hover:bg-gray-50">
-                        <Bell className="w-5 h-5" />
-                    </button>
+                    <NotificationDropdown />
 
                     <div className="h-6 w-[1px] bg-gray-200" />
 
@@ -53,11 +53,7 @@ export const Header = () => {
                                     "w-8 h-8 rounded bg-white overflow-hidden flex items-center justify-center border shrink-0",
                                     roleColor.border
                                 )}>
-                                    <img
-                                        src={roleColor.logo}
-                                        alt="Agency Logo"
-                                        className="w-full h-full object-contain p-0.5"
-                                    />
+                                   <User2 className="w-4 h-4 text-gray-400" />
                                 </div>
                                 <div className="hidden sm:flex flex-col items-start leading-tight">
                                     <span className="text-sm font-medium text-gray-900">{user?.firstName}</span>
