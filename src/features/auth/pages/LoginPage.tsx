@@ -23,9 +23,7 @@ const LoginPage: React.FC = () => {
                 <div className="relative z-10 flex flex-col justify-between p-6 text-white w-full">
                     {/* Logo */}
                     <div className="flex items-center gap-3">
-                        <div className="p-2 w-40 bg-white rounded-lg flex items-center justify-center">
-                            <img src={logo} alt="Logo" className="object-contain" />
-                        </div>
+
                         {/* <span className="text-xl font-semibold">FraudWall Auto</span> */}
                     </div>
 
@@ -60,7 +58,9 @@ const LoginPage: React.FC = () => {
                         </div>
                         <h2 className="text-xl font-bold text-gray-900">FraudWall Auto</h2>
                     </div>
-
+                    <div className="p-2 w-[20rem] bg-white rounded-lg flex items-center justify-center">
+                        <img src={logo} alt="Logo" className="object-contain" />
+                    </div>
                     {/* Header */}
                     <div className="space-y-2">
                         <h2 className="text-3xl font-bold text-gray-900">
